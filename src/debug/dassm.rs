@@ -14,7 +14,7 @@ impl IntelDebug {
             idx : 0,
         }
     }
-    fn read_rom(&mut self, rom : &str) {
+    pub fn read_rom(&mut self, rom : &str) {
         let mut rom = File::open(rom).unwrap_or_else(|_err| panic!("Valid ROM needed!"));
         rom.read_to_end(&mut self.rom_buf).unwrap_or_else(|_err| panic!("Error reading ROM"));
     }
@@ -26,7 +26,7 @@ impl IntelDebug {
             _ => {}
         }
     }
-    pub fn print_debug(&mut self) {
+    pub fn dump_rom(&mut self) {
         for idx in 0..self.rom_buf.len() {
             self.idx = idx;
             self.translate();
