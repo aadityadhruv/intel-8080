@@ -1,5 +1,6 @@
 mod debug;
 
+use crate::debug::dassm;
 use clap::Parser;
 
 #[derive(Parser, Debug)]
@@ -18,4 +19,5 @@ fn main() {
     let rom = args.rom;
     let debug = args.debug > 0;
     println!("Debug mode is {}, loading ROM {}", if debug {"ON"} else {"OFF"}, rom);
+    dassm::IntelDebug::new();
 }
