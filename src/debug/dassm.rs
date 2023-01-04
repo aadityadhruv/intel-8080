@@ -37,293 +37,300 @@ impl IntelDebug {
         //Match the Instruction to all possible opcodes and print the corresponding instruction
         match instr {
 
-            0x00 => { println!("NOP") }
-            0x01 => { println!("LXI B D16 | {:?}, {:?}", arg2, arg1); next = 3;}
-            0x02 => { println!("STAX B") }
-            0x03 => { println!("INX B") }
-            0x04 => { println!("INR B") }
-            0x05 => { println!("DCR B") }
-            0x06 => { println!("MVI B D8 | {:?}", arg2); next = 2; }
-            0x07 => { println!("RLC") }
-            0x08 => { println!("-") }
-            0x09 => { println!("DAD B") }
-            0x0a => { println!("LDAX B") }
-            0x0b => { println!("DCX B") }
-            0x0c => { println!("INR C") }
-            0x0d => { println!("DCR C") }
-            0x0e => { println!("MVI C D8 | {:?}", arg1); next = 2; }
-            0x0f => { println!("RRC") }
+            0x00 => { print!("NOP") }
+            0x01 => { print!("LXI B D16"); next = 3;}
+            0x02 => { print!("STAX B") }
+            0x03 => { print!("INX B") }
+            0x04 => { print!("INR B") }
+            0x05 => { print!("DCR B") }
+            0x06 => { print!("MVI B D8"); next = 2; }
+            0x07 => { print!("RLC") }
+            0x08 => { print!("-") }
+            0x09 => { print!("DAD B") }
+            0x0a => { print!("LDAX B") }
+            0x0b => { print!("DCX B") }
+            0x0c => { print!("INR C") }
+            0x0d => { print!("DCR C") }
+            0x0e => { print!("MVI C D8"); next = 2; }
+            0x0f => { print!("RRC") }
 
-            0x10 => { println!("-") }
-            0x11 => { println!("LXI D D16 | {:?}, {:?}", arg2, arg1); next = 3; }
-            0x12 => { println!("STAX D") }
-            0x13 => { println!("INX D") }
-            0x14 => { println!("INR D") }
-            0x15 => { println!("DCR D") }
-            0x16 => { println!("MVI D D8 | {:?}", arg1); next = 2;}
-            0x17 => { println!("RAL") }
-            0x18 => { println!("-") }
-            0x19 => { println!("DAD D") }
-            0x1a => { println!("LDAX D") }
-            0x1b => { println!("DCX D") }
-            0x1c => { println!("INR E") }
-            0x1d => { println!("DCR E") }
-            0x1e => { println!("MVI E D8 | {:?}", arg1); next = 2; }
-            0x1f => { println!("RAR"); }
+            0x10 => { print!("-") }
+            0x11 => { print!("LXI D D16"); next = 3; }
+            0x12 => { print!("STAX D") }
+            0x13 => { print!("INX D") }
+            0x14 => { print!("INR D") }
+            0x15 => { print!("DCR D") }
+            0x16 => { print!("MVI D D8"); next = 2;}
+            0x17 => { print!("RAL") }
+            0x18 => { print!("-") }
+            0x19 => { print!("DAD D") }
+            0x1a => { print!("LDAX D") }
+            0x1b => { print!("DCX D") }
+            0x1c => { print!("INR E") }
+            0x1d => { print!("DCR E") }
+            0x1e => { print!("MVI E D8"); next = 2; }
+            0x1f => { print!("RAR"); }
 
-            0x20 => { println!("RIM") }
-            0x21 => { println!("LXI H D16 | {:?}, {:?}", arg2, arg1); next = 3; }
-            0x22 => { println!("SHLD adr"); next = 3; }
-            0x23 => { println!("INX H") }
-            0x24 => { println!("INR H") }
-            0x25 => { println!("DCR H") }
-            0x26 => { println!("MVI H D8 |  {:?}", arg1); next = 2; }
-            0x27 => { println!("DAA") }
-            0x28 => { println!("-") }
-            0x29 => { println!("DAD H") }
-            0x2a => { println!("LHLD adr"); next = 3; }
-            0x2b => { println!("DCX H") }
-            0x2c => { println!("INR L") }
-            0x2d => { println!("DCR L") }
-            0x2e => { println!("MVI L D8 | {:?}", arg1); next = 2; }
-            0x2f => { println!("CMA") }
+            0x20 => { print!("RIM") }
+            0x21 => { print!("LXI H D16"); next = 3; }
+            0x22 => { print!("SHLD adr"); next = 3; }
+            0x23 => { print!("INX H") }
+            0x24 => { print!("INR H") }
+            0x25 => { print!("DCR H") }
+            0x26 => { print!("MVI H D8"); next = 2; }
+            0x27 => { print!("DAA") }
+            0x28 => { print!("-") }
+            0x29 => { print!("DAD H") }
+            0x2a => { print!("LHLD adr"); next = 3; }
+            0x2b => { print!("DCX H") }
+            0x2c => { print!("INR L") }
+            0x2d => { print!("DCR L") }
+            0x2e => { print!("MVI L D8"); next = 2; }
+            0x2f => { print!("CMA") }
 
-            0x30 => { println!("SIM") }
-            0x31 => { println!("LXI SP D16 | {:?}, {:?}", arg2, arg1); next = 3; }
-            0x32 => { println!("STA adr"); next = 3; }
-            0x33 => { println!("INX SP") }
-            0x34 => { println!("INR M") }
-            0x35 => { println!("DCR M") }
-            0x36 => { println!("MVI M D8 | {:?}", arg1); next = 2; }
-            0x37 => { println!("STC") }
-            0x38 => { println!("-") }
-            0x39 => { println!("DAD SP") }
-            0x3a => { println!("LDA adr"); next = 3; }
-            0x3b => { println!("DCX SP") }
-            0x3c => { println!("INR A") }
-            0x3d => { println!("DCR A") }
-            0x3e => { println!("MVI A, D8 | {:?}", arg1); next = 2; }
-            0x3f => { println!("CMC") }
+            0x30 => { print!("SIM") }
+            0x31 => { print!("LXI SP D16"); next = 3; }
+            0x32 => { print!("STA adr"); next = 3; }
+            0x33 => { print!("INX SP") }
+            0x34 => { print!("INR M") }
+            0x35 => { print!("DCR M") }
+            0x36 => { print!("MVI M D8"); next = 2; }
+            0x37 => { print!("STC") }
+            0x38 => { print!("-") }
+            0x39 => { print!("DAD SP") }
+            0x3a => { print!("LDA adr"); next = 3; }
+            0x3b => { print!("DCX SP") }
+            0x3c => { print!("INR A") }
+            0x3d => { print!("DCR A") }
+            0x3e => { print!("MVI A, D8"); next = 2; }
+            0x3f => { print!("CMC") }
 
-            0x40 => { println!("MOV B B") }
-            0x41 => { println!("MOV B C") }
-            0x42 => { println!("MOV B D") }
-            0x43 => { println!("MOV B E") }
-            0x44 => { println!("MOV B H") }
-            0x45 => { println!("MOV B L") }
-            0x46 => { println!("MOV B M") }
-            0x47 => { println!("MOV B A") }
+            0x40 => { print!("MOV B B") }
+            0x41 => { print!("MOV B C") }
+            0x42 => { print!("MOV B D") }
+            0x43 => { print!("MOV B E") }
+            0x44 => { print!("MOV B H") }
+            0x45 => { print!("MOV B L") }
+            0x46 => { print!("MOV B M") }
+            0x47 => { print!("MOV B A") }
 
-            0x48 => { println!("MOV C B") }
-            0x49 => { println!("MOV C C") }
-            0x4a => { println!("MOV C D") }
-            0x4b => { println!("MOV C E") }
-            0x4c => { println!("MOV C H") }
-            0x4d => { println!("MOV C L") }
-            0x4e => { println!("MOV C M") }
-            0x4f => { println!("MOV C A") }
+            0x48 => { print!("MOV C B") }
+            0x49 => { print!("MOV C C") }
+            0x4a => { print!("MOV C D") }
+            0x4b => { print!("MOV C E") }
+            0x4c => { print!("MOV C H") }
+            0x4d => { print!("MOV C L") }
+            0x4e => { print!("MOV C M") }
+            0x4f => { print!("MOV C A") }
 
-            0x50 => { println!("MOV D B") }
-            0x51 => { println!("MOV D C") }
-            0x52 => { println!("MOV D D") }
-            0x53 => { println!("MOV D E") }
-            0x54 => { println!("MOV D H") }
-            0x55 => { println!("MOV D L") }
-            0x56 => { println!("MOV D M") }
-            0x57 => { println!("MOV D A") }
+            0x50 => { print!("MOV D B") }
+            0x51 => { print!("MOV D C") }
+            0x52 => { print!("MOV D D") }
+            0x53 => { print!("MOV D E") }
+            0x54 => { print!("MOV D H") }
+            0x55 => { print!("MOV D L") }
+            0x56 => { print!("MOV D M") }
+            0x57 => { print!("MOV D A") }
 
-            0x58 => { println!("MOV E B") }
-            0x59 => { println!("MOV E C") }
-            0x5a => { println!("MOV E D") }
-            0x5b => { println!("MOV E E") }
-            0x5c => { println!("MOV E H") }
-            0x5d => { println!("MOV E L") }
-            0x5e => { println!("MOV E M") }
-            0x5f => { println!("MOV E A") }
+            0x58 => { print!("MOV E B") }
+            0x59 => { print!("MOV E C") }
+            0x5a => { print!("MOV E D") }
+            0x5b => { print!("MOV E E") }
+            0x5c => { print!("MOV E H") }
+            0x5d => { print!("MOV E L") }
+            0x5e => { print!("MOV E M") }
+            0x5f => { print!("MOV E A") }
 
-            0x60 => { println!("MOV H B") }
-            0x61 => { println!("MOV H C") }
-            0x62 => { println!("MOV H D") }
-            0x63 => { println!("MOV H E") }
-            0x64 => { println!("MOV H H") }
-            0x65 => { println!("MOV H L") }
-            0x66 => { println!("MOV H M") }
-            0x67 => { println!("MOV H A") }
+            0x60 => { print!("MOV H B") }
+            0x61 => { print!("MOV H C") }
+            0x62 => { print!("MOV H D") }
+            0x63 => { print!("MOV H E") }
+            0x64 => { print!("MOV H H") }
+            0x65 => { print!("MOV H L") }
+            0x66 => { print!("MOV H M") }
+            0x67 => { print!("MOV H A") }
 
-            0x68 => { println!("MOV L B") }
-            0x69 => { println!("MOV L C") }
-            0x6a => { println!("MOV L D") }
-            0x6b => { println!("MOV L E") }
-            0x6c => { println!("MOV L H") }
-            0x6d => { println!("MOV L L") }
-            0x6e => { println!("MOV L M") }
-            0x6f => { println!("MOV L A") }
+            0x68 => { print!("MOV L B") }
+            0x69 => { print!("MOV L C") }
+            0x6a => { print!("MOV L D") }
+            0x6b => { print!("MOV L E") }
+            0x6c => { print!("MOV L H") }
+            0x6d => { print!("MOV L L") }
+            0x6e => { print!("MOV L M") }
+            0x6f => { print!("MOV L A") }
 
-            0x70 => { println!("MOV M B") }
-            0x71 => { println!("MOV M C") }
-            0x72 => { println!("MOV M D") }
-            0x73 => { println!("MOV M E") }
-            0x74 => { println!("MOV M H") }
-            0x75 => { println!("MOV M L") }
+            0x70 => { print!("MOV M B") }
+            0x71 => { print!("MOV M C") }
+            0x72 => { print!("MOV M D") }
+            0x73 => { print!("MOV M E") }
+            0x74 => { print!("MOV M H") }
+            0x75 => { print!("MOV M L") }
 
-            0x76 => { println!("HLT") }
+            0x76 => { print!("HLT") }
 
-            0x77 => { println!("MOV M A") }
+            0x77 => { print!("MOV M A") }
 
-            0x78 => { println!("MOV A B") }
-            0x79 => { println!("MOV A C") }
-            0x7a => { println!("MOV A D") }
-            0x7b => { println!("MOV A E") }
-            0x7c => { println!("MOV A H") }
-            0x7d => { println!("MOV A L") }
-            0x7e => { println!("MOV A M") }
-            0x7f => { println!("MOV A A") }
+            0x78 => { print!("MOV A B") }
+            0x79 => { print!("MOV A C") }
+            0x7a => { print!("MOV A D") }
+            0x7b => { print!("MOV A E") }
+            0x7c => { print!("MOV A H") }
+            0x7d => { print!("MOV A L") }
+            0x7e => { print!("MOV A M") }
+            0x7f => { print!("MOV A A") }
 
-            0x80 => { println!("ADD B") }
-            0x81 => { println!("ADD C") }
-            0x82 => { println!("ADD D") }
-            0x83 => { println!("ADD E") }
-            0x84 => { println!("ADD H") }
-            0x85 => { println!("ADD L") }
-            0x86 => { println!("ADD M") }
-            0x87 => { println!("ADD A") }
+            0x80 => { print!("ADD B") }
+            0x81 => { print!("ADD C") }
+            0x82 => { print!("ADD D") }
+            0x83 => { print!("ADD E") }
+            0x84 => { print!("ADD H") }
+            0x85 => { print!("ADD L") }
+            0x86 => { print!("ADD M") }
+            0x87 => { print!("ADD A") }
 
-            0x88 => { println!("ADC B") }
-            0x89 => { println!("ADC C") }
-            0x8a => { println!("ADC D") }
-            0x8b => { println!("ADC E") }
-            0x8c => { println!("ADC H") }
-            0x8d => { println!("ADC L") }
-            0x8e => { println!("ADC M") }
-            0x8f => { println!("ADC A") }
+            0x88 => { print!("ADC B") }
+            0x89 => { print!("ADC C") }
+            0x8a => { print!("ADC D") }
+            0x8b => { print!("ADC E") }
+            0x8c => { print!("ADC H") }
+            0x8d => { print!("ADC L") }
+            0x8e => { print!("ADC M") }
+            0x8f => { print!("ADC A") }
 
-            0x90 => { println!("SUB B") }
-            0x91 => { println!("SUB C") }
-            0x92 => { println!("SUB D") }
-            0x93 => { println!("SUB E") }
-            0x94 => { println!("SUB H") }
-            0x95 => { println!("SUB L") }
-            0x96 => { println!("SUB M") }
-            0x97 => { println!("SUB A") }
+            0x90 => { print!("SUB B") }
+            0x91 => { print!("SUB C") }
+            0x92 => { print!("SUB D") }
+            0x93 => { print!("SUB E") }
+            0x94 => { print!("SUB H") }
+            0x95 => { print!("SUB L") }
+            0x96 => { print!("SUB M") }
+            0x97 => { print!("SUB A") }
 
-            0x98 => { println!("SBB B") }
-            0x99 => { println!("SBB C") }
-            0x9a => { println!("SBB D") }
-            0x9b => { println!("SBB E") }
-            0x9c => { println!("SBB H") }
-            0x9d => { println!("SBB L") }
-            0x9e => { println!("SBB M") }
-            0x9f => { println!("SBB A") }
+            0x98 => { print!("SBB B") }
+            0x99 => { print!("SBB C") }
+            0x9a => { print!("SBB D") }
+            0x9b => { print!("SBB E") }
+            0x9c => { print!("SBB H") }
+            0x9d => { print!("SBB L") }
+            0x9e => { print!("SBB M") }
+            0x9f => { print!("SBB A") }
 
-            0xa0 => { println!("ANA B") }
-            0xa1 => { println!("ANA C") }
-            0xa2 => { println!("ANA D") }
-            0xa3 => { println!("ANA E") }
-            0xa4 => { println!("ANA H") }
-            0xa5 => { println!("ANA L") }
-            0xa6 => { println!("ANA M") }
-            0xa7 => { println!("ANA A") }
+            0xa0 => { print!("ANA B") }
+            0xa1 => { print!("ANA C") }
+            0xa2 => { print!("ANA D") }
+            0xa3 => { print!("ANA E") }
+            0xa4 => { print!("ANA H") }
+            0xa5 => { print!("ANA L") }
+            0xa6 => { print!("ANA M") }
+            0xa7 => { print!("ANA A") }
 
-            0xa8 => { println!("XRA B") }
-            0xa9 => { println!("XRA C") }
-            0xaa => { println!("XRA D") }
-            0xab => { println!("XRA E") }
-            0xac => { println!("XRA H") }
-            0xad => { println!("XRA L") }
-            0xae => { println!("XRA M") }
-            0xaf => { println!("XRA A") }
+            0xa8 => { print!("XRA B") }
+            0xa9 => { print!("XRA C") }
+            0xaa => { print!("XRA D") }
+            0xab => { print!("XRA E") }
+            0xac => { print!("XRA H") }
+            0xad => { print!("XRA L") }
+            0xae => { print!("XRA M") }
+            0xaf => { print!("XRA A") }
 
 
-            0xb0 => { println!("ORA B") }
-            0xb1 => { println!("ORA C") }
-            0xb2 => { println!("ORA D") }
-            0xb3 => { println!("ORA E") }
-            0xb4 => { println!("ORA H") }
-            0xb5 => { println!("ORA L") }
-            0xb6 => { println!("ORA M") }
-            0xb7 => { println!("ORA A") }
+            0xb0 => { print!("ORA B") }
+            0xb1 => { print!("ORA C") }
+            0xb2 => { print!("ORA D") }
+            0xb3 => { print!("ORA E") }
+            0xb4 => { print!("ORA H") }
+            0xb5 => { print!("ORA L") }
+            0xb6 => { print!("ORA M") }
+            0xb7 => { print!("ORA A") }
 
-            0xb8 => { println!("CMP B") }
-            0xb9 => { println!("CMP C") }
-            0xba => { println!("CMP D") }
-            0xbb => { println!("CMP E") }
-            0xbc => { println!("CMP H") }
-            0xbd => { println!("CMP L") }
-            0xbe => { println!("CMP M") }
-            0xbf => { println!("CMP A") }
+            0xb8 => { print!("CMP B") }
+            0xb9 => { print!("CMP C") }
+            0xba => { print!("CMP D") }
+            0xbb => { print!("CMP E") }
+            0xbc => { print!("CMP H") }
+            0xbd => { print!("CMP L") }
+            0xbe => { print!("CMP M") }
+            0xbf => { print!("CMP A") }
 
-            0xc0 => { println!("RNZ") }
-            0xc1 => { println!("POP B") }
-            0xc2 => { println!("JNZ adr"); next = 3; }
-            0xc3 => { println!("JMP adr"); next = 3; }
-            0xc4 => { println!("CNZ adr"); next = 3; }
-            0xc5 => { println!("PUSH B") }
-            0xc6 => { println!("ADI D8 | {:?}", arg1); next = 2; }
-            0xc7 => { println!("RST 0") }
+            0xc0 => { print!("RNZ") }
+            0xc1 => { print!("POP B") }
+            0xc2 => { print!("JNZ adr"); next = 3; }
+            0xc3 => { print!("JMP adr"); next = 3; }
+            0xc4 => { print!("CNZ adr"); next = 3; }
+            0xc5 => { print!("PUSH B") }
+            0xc6 => { print!("ADI D8"); next = 2; }
+            0xc7 => { print!("RST 0") }
 
-            0xc8 => { println!("RZ") }
-            0xc9 => { println!("RET") }
-            0xca => { println!("JZ adr") }
-            0xcb => { println!("-") }
-            0xcc => { println!("CZ adr"); next = 3; }
-            0xcd => { println!("CALL adr"); next = 3; }
-            0xce => { println!("ACI D8"); next = 2; }
-            0xcf => { println!("RST 1") }
+            0xc8 => { print!("RZ") }
+            0xc9 => { print!("RET") }
+            0xca => { print!("JZ adr") }
+            0xcb => { print!("-") }
+            0xcc => { print!("CZ adr"); next = 3; }
+            0xcd => { print!("CALL adr"); next = 3; }
+            0xce => { print!("ACI D8"); next = 2; }
+            0xcf => { print!("RST 1") }
 
-            0xd0 => { println!("RNC") }
-            0xd1 => { println!("POP D") }
-            0xd2 => { println!("JNC adr"); next = 3; }
-            0xd3 => { println!("OUT D8"); next = 2; }
-            0xd4 => { println!("CNC adr"); next = 3; }
-            0xd5 => { println!("PUSH D") }
-            0xd6 => { println!("SUI D8"); next = 2; }
-            0xd7 => { println!("RST 2") }
+            0xd0 => { print!("RNC") }
+            0xd1 => { print!("POP D") }
+            0xd2 => { print!("JNC adr"); next = 3; }
+            0xd3 => { print!("OUT D8"); next = 2; }
+            0xd4 => { print!("CNC adr"); next = 3; }
+            0xd5 => { print!("PUSH D") }
+            0xd6 => { print!("SUI D8"); next = 2; }
+            0xd7 => { print!("RST 2") }
 
-            0xd8 => { println!("RC") }
-            0xd9 => { println!("-") }
-            0xda => { println!("JC adr"); next = 3; }
-            0xdb => { println!("IN D8"); next = 2; }
-            0xdc => { println!("CC adr"); next = 3; }
-            0xdd => { println!("-");  }
-            0xde => { println!("SBI D8"); next = 2; }
-            0xdf => { println!("RST 3") }
+            0xd8 => { print!("RC") }
+            0xd9 => { print!("-") }
+            0xda => { print!("JC adr"); next = 3; }
+            0xdb => { print!("IN D8"); next = 2; }
+            0xdc => { print!("CC adr"); next = 3; }
+            0xdd => { print!("-");  }
+            0xde => { print!("SBI D8"); next = 2; }
+            0xdf => { print!("RST 3") }
 
-            0xe0 => { println!("RPO") }
-            0xe1 => { println!("POP H") }
-            0xe2 => { println!("JPO adr"); next = 3; }
-            0xe3 => { println!("XTHL") }
-            0xe4 => { println!("CPO adr"); next = 3; }
-            0xe5 => { println!("PUSH H") }
-            0xe6 => { println!("ANI D8"); next = 2; }
-            0xe7 => { println!("RST 4") }
+            0xe0 => { print!("RPO") }
+            0xe1 => { print!("POP H") }
+            0xe2 => { print!("JPO adr"); next = 3; }
+            0xe3 => { print!("XTHL") }
+            0xe4 => { print!("CPO adr"); next = 3; }
+            0xe5 => { print!("PUSH H") }
+            0xe6 => { print!("ANI D8"); next = 2; }
+            0xe7 => { print!("RST 4") }
 
-            0xe8 => { println!("RPE") }
-            0xe9 => { println!("PCHL") }
-            0xea => { println!("JPE adr"); next = 3; }
-            0xeb => { println!("XCHG") }
-            0xec => { println!("CPE adr"); next = 3; }
-            0xed => { println!("-") }
-            0xee => { println!("XRI D8"); next = 2; }
-            0xef => { println!("RST 5") }
+            0xe8 => { print!("RPE") }
+            0xe9 => { print!("PCHL") }
+            0xea => { print!("JPE adr"); next = 3; }
+            0xeb => { print!("XCHG") }
+            0xec => { print!("CPE adr"); next = 3; }
+            0xed => { print!("-") }
+            0xee => { print!("XRI D8"); next = 2; }
+            0xef => { print!("RST 5") }
 
-            0xf0 => { println!("RP") }
-            0xf1 => { println!("POP PSW") }
-            0xf2 => { println!("JP adr"); next = 3; }
-            0xf3 => { println!("DI") }
-            0xf4 => { println!("CP adr"); next = 3; }
-            0xf5 => { println!("PUSH PSW") }
-            0xf6 => { println!("ORI D8"); next = 2; }
-            0xf7 => { println!("RST 6") }
+            0xf0 => { print!("RP") }
+            0xf1 => { print!("POP PSW") }
+            0xf2 => { print!("JP adr"); next = 3; }
+            0xf3 => { print!("DI") }
+            0xf4 => { print!("CP adr"); next = 3; }
+            0xf5 => { print!("PUSH PSW") }
+            0xf6 => { print!("ORI D8"); next = 2; }
+            0xf7 => { print!("RST 6") }
 
-            0xf8 => { println!("RM") }
-            0xf9 => { println!("SPHL") }
-            0xfa => { println!("JM adr"); next = 3; }
-            0xfb => { println!("EI") }
-            0xfc => { println!("CM adr"); next = 3; }
-            0xfd => { println!("-") }
-            0xfe => { println!("CPI D8"); next = 2; }
-            0xff => { println!("RST 7") }
+            0xf8 => { print!("RM") }
+            0xf9 => { print!("SPHL") }
+            0xfa => { print!("JM adr"); next = 3; }
+            0xfb => { print!("EI") }
+            0xfc => { print!("CM adr"); next = 3; }
+            0xfd => { print!("-") }
+            0xfe => { print!("CPI D8"); next = 2; }
+            0xff => { print!("RST 7") }
         }
+
+        match next {
+            2 => { println!(" ${:02x}", arg1.unwrap()) }
+            3 => { println!(" ${:02x}{:02x}", arg2.unwrap(), arg1.unwrap()) }
+            _ => { println!("") }
+        }
+
 
         self.idx += next;
     }
