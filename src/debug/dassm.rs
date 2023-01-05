@@ -18,7 +18,7 @@ impl IntelDebug {
         }
     }
     //Read the provided ROM into memory
-    pub fn read_rom(&mut self, rom : &str) {
+    pub fn load_rom(&mut self, rom : &str) {
         let mut rom = File::open(rom).unwrap_or_else(|_err| panic!("Valid ROM needed!"));
         rom.read_to_end(&mut self.rom_buf).unwrap_or_else(|_err| panic!("Error reading ROM"));
     }
