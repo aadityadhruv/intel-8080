@@ -3,11 +3,12 @@ use std::io::Read;
 use sdl2::keyboard::Keycode;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
-use crate::DISPLAY_LENGTH;
 use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use crate::WIDTH;
+use crate::DISPLAY_LENGTH;
 use crate::SCALE;
+use rand::Rng;
 
 struct Flags {
     z : u8,
@@ -89,7 +90,9 @@ impl Intel8080 {
         self.pc += 2;
     }
     pub fn execute(&mut self) {
-        todo!();
+        match self.instr {
+            _ => {}
+        }
     }
     pub fn render(&mut self, canvas : &mut Canvas<Window>) {
         for idx in 0..DISPLAY_LENGTH {
@@ -100,7 +103,7 @@ impl Intel8080 {
             //Draw rectangle as pixel, scale - 1 so border are seen
             let rect = Rect::new(x_coord, y_coord, SCALE, SCALE);
             //Choose color of bit
-            let color = match self.mem[0x2400 + idx as usize] {
+            let color = match self.mem[0x2400 + (idx / 8) as usize] {
                     0 => Color::RGB(0, 0, 0),
                     _ => Color::RGB(255, 255, 255),
             };

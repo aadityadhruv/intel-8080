@@ -57,7 +57,7 @@ fn main() {
         chip.load_rom(&rom);
 
         'running: loop {
-            chip.clear_input();
+            //chip.clear_input();
             for event in event_pump.poll_iter() {
                 match event {
                     Event::Quit {..} |
@@ -65,7 +65,7 @@ fn main() {
                             break 'running
                         },
                         Event::KeyDown { keycode : Some(key), .. } => {
-                            chip.feed_input(key);
+                            //chip.feed_input(key);
                         }
                     _ => {}
                 }
