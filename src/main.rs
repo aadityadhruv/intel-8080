@@ -11,9 +11,10 @@ use intel_8080::chip::intel;
 #[derive(Parser, Debug)]
 #[command(author="Aaditya Dhruv", version = "0.1.0", about="", long_about = None)]
 struct Args {
-    /// Set this flag to run the ROM under debug mode 
-    #[arg(short, long, action = clap::ArgAction::Count)]
-    debug : u8,
+    /// Set this flag to run the ROM under debug mode. 1 is to dump the rom data, 2 is to enter
+    /// step mode.
+    #[arg(short, long)]
+    debug : Option<u8>,
     /// The path to the ROM, e.g. /path/to/rom
     rom : String,
 }
@@ -22,8 +23,8 @@ struct Args {
 fn main() {
     let args = Args::parse();
     let rom = args.rom;
-    let debug = args.debug > 0;
-    println!("Debug mode is {}, loading ROM {}", if debug {"ON"} else {"OFF"}, rom);
+    let debug = match args.debug { Some(v) => { v } None => {0} };
+    println!("Debug mode is {}, loading ROM {}", if debug > 0 {"ON"} else {"OFF"}, rom);
 
 
     //SDL initalizationa and window creation
@@ -47,10 +48,42 @@ fn main() {
 
 
 
-    if debug {
+    if debug > 0 {
         let mut dassm = dassm::IntelDebug::new();
         dassm.load_rom(&rom);
-        dassm.dump_rom();
+        if debug == 1 {
+            dassm.dump_rom();
+        }
+        else {
+            'running: loop {
+                //chip.clear_input();
+                for event in event_pump.poll_iter() {
+                    match event {
+                        Event::Quit {..} |
+                            Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                                break 'running
+                            },
+                            Event::KeyDown { keycode : Some(key), .. } => {
+                                //chip.feed_input(key);
+                            }
+                        _ => {}
+                    }
+                }
+                // The rest of the game loop goes here...
+                //Draw black bg
+                canvas.set_draw_color(Color::RGB(0, 0, 0));
+                //clear the screen with black bg
+                canvas.clear();
+                //choose white color 
+                canvas.set_draw_color(Color::RGB(255, 255, 255));
+                //render all the rectangles as white pixels on the canvas
+                //display canvas
+                canvas.present();
+
+                std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
+
+            }
+        }
     }
     else {
         let mut chip = intel::Intel8080::new();

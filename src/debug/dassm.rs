@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::Read;
+use crate::chip::intel::Intel8080;
 
 //A rudimentary struct for debugging 
 pub struct IntelDebug {
@@ -21,6 +22,10 @@ impl IntelDebug {
     pub fn load_rom(&mut self, rom : &str) {
         let mut rom = File::open(rom).unwrap_or_else(|_err| panic!("Valid ROM needed!"));
         rom.read_to_end(&mut self.rom_buf).unwrap_or_else(|_err| panic!("Error reading ROM"));
+    }
+
+    pub fn step(&mut self) {
+        todo!();
     }
 
     //DEBUG: Translates the instruction at self.idx into human-readable assembly
