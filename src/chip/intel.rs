@@ -61,4 +61,9 @@ impl Intel8080 {
             self.mem[i] = val;
         }
     }
+    pub fn clear_input(&mut self) {
+        for i in 0x2400..0x4000 {
+            self.mem[i] = 0;
+        }
+    }
 }
