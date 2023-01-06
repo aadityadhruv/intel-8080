@@ -1,6 +1,12 @@
+use sdl2::pixels::Color;
+use sdl2::event::Event;
+use sdl2::keyboard::Keycode;
+use std::time::Duration;
+use clap::Parser;
+
+
 use intel_8080::debug::dassm;
 use intel_8080::chip::intel;
-use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[command(author="Aaditya Dhruv", version = "0.1.0", about="", long_about = None)]
@@ -18,13 +24,68 @@ fn main() {
     let rom = args.rom;
     let debug = args.debug > 0;
     println!("Debug mode is {}, loading ROM {}", if debug {"ON"} else {"OFF"}, rom);
+
+
+    //SDL initalizationa and window creation
+    let sdl_context = sdl2::init().unwrap();
+    let video_subsystem = sdl_context.video().unwrap();
+    let window_name = String::from("Intel-8080") + &rom;
+    let window = video_subsystem.window(
+        window_name.as_str(),
+        intel_8080::WIDTH * intel_8080::SCALE,
+        intel_8080::HEIGHT * intel_8080::SCALE
+    )
+        .position_centered()
+        .build()
+        .unwrap();
+
+    //Canvas to interact with
+    let mut canvas = window.into_canvas().build().unwrap();
+
+    //Keyboard input handler
+    let mut event_pump = sdl_context.event_pump().unwrap();
+
+
+
     if debug {
-    let mut dassm = dassm::IntelDebug::new();
+        let mut dassm = dassm::IntelDebug::new();
         dassm.load_rom(&rom);
         dassm.dump_rom();
     }
     else {
         let mut chip = intel::Intel8080::new();
         chip.load_rom(&rom);
+
+        'running: loop {
+            chip.clear_input();
+            for event in event_pump.poll_iter() {
+                match event {
+                    Event::Quit {..} |
+                        Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                            break 'running
+                        },
+                        Event::KeyDown { keycode : Some(key), .. } => {
+                            chip.feed_input(key);
+                        }
+                    _ => {}
+                }
+            }
+            // The rest of the game loop goes here...
+            //Draw black bg
+            canvas.set_draw_color(Color::RGB(0, 0, 0));
+            //clear the screen with black bg
+            canvas.clear();
+            //choose white color 
+            canvas.set_draw_color(Color::RGB(255, 255, 255));
+            //render all the rectangles as white pixels on the canvas
+            chip.fetch();
+            chip.execute();
+            chip.render(&mut canvas);
+            //display canvas
+            canvas.present();
+
+            std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
+
+        }
     }
 }
