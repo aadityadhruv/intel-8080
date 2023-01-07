@@ -4,9 +4,8 @@ use sdl2::keyboard::Keycode;
 use std::time::Duration;
 use clap::Parser;
 
-
-use intel_8080::debug::dassm;
-use intel_8080::chip::intel;
+use intel_8080::chip::IntelDebug;
+use intel_8080::chip::Intel8080;
 
 #[derive(Parser, Debug)]
 #[command(author="Aaditya Dhruv", version = "0.1.0", about="", long_about = None)]
@@ -49,7 +48,7 @@ fn main() {
 
 
     if debug > 0 {
-        let mut dassm = dassm::IntelDebug::new();
+        let mut dassm = IntelDebug::new();
         dassm.load_rom(&rom);
         if debug == 1 {
             dassm.dump_rom();
@@ -86,7 +85,7 @@ fn main() {
         }
     }
     else {
-        let mut chip = intel::Intel8080::new();
+        let mut chip = Intel8080::new();
         chip.load_rom(&rom);
 
         'running: loop {

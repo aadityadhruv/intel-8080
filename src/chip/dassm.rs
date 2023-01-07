@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::Read;
-use crate::chip::intel::Intel8080;
 
 //A rudimentary struct for debugging 
 pub struct IntelDebug {
