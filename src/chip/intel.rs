@@ -30,6 +30,8 @@ pub struct Intel8080 {
     sp : u16, //stack pointer
     pc : u16, //program counter
     mem : [u8; 0x4000], //Memory buffer, which includes video buffer starting at 0x2400
+    byte2 : u8,
+    byte3 : u8,
     flags : Flags //Flags for math
 }
 
@@ -61,6 +63,8 @@ impl Intel8080 {
             sp : 0,
             pc : 0,
             mem : [0; 0x4000],
+            byte2 : 0,
+            byte3: 0,
             flags : Flags::new(),
         }
     }
@@ -86,13 +90,16 @@ impl Intel8080 {
     //Fetch next instructions
     pub fn fetch(&mut self) {
         self.instr = self.mem[(self.pc as usize)];
+        let arg1 = self.mem[self.pc as usize + 1];
+        let arg2 = self.mem[self.pc as usize + 2];
+        self.byte2 = arg1;
+        self.byte3 = arg2;
         println!("Current instr is 0x{:02X}", self.instr);
         self.pc += 1;
     }
     pub fn execute(&mut self) {
         let mut next = 0;
-        let arg1 = self.mem[self.pc as usize + 1];
-        let arg2 = self.mem[self.pc as usize + 2];
+
 
         match self.instr {
 
@@ -385,8 +392,8 @@ impl Intel8080 {
         }
 
         match next {
-            1 => { println!(" ${:02x}", arg1) }
-            2 => { println!(" ${:02x}{:02x}", arg2, arg1) }
+            1 => { println!(" ${:02x}", self.byte2) }
+            2 => { println!(" ${:02x}{:02x}", self.byte3, self.byte2) }
             _ => { println!("") }
         }
         self.pc += next;
@@ -410,4 +417,22 @@ impl Intel8080 {
 
         }
     }
+
+
+    pub fn nop_0x00(&mut self) {
+        //do nothing
+    }
+
+    pub fn lxi_0x01(&mut self) {
+        self.b = self.byte3;
+        self.c = self.byte2;
+    }
+
+
+
+
+
+
+
+
 }
