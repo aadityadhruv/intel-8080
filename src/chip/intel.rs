@@ -26,7 +26,7 @@ pub struct Intel8080 {
     e : u8,
     h : u8,
     l : u8,
-    instr : u8, //Current instr
+    pub instr : u8, //Current instr
     sp : u16, //stack pointer
     pc : u16, //program counter
     mem : [u8; 0x4000], //Memory buffer, which includes video buffer starting at 0x2400

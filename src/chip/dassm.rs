@@ -1,10 +1,13 @@
 use std::fs::File;
 use std::io::Read;
+use super::intel::Intel8080;
 
 //A rudimentary struct for debugging 
 pub struct IntelDebug {
     rom_buf : Vec::<u8>, 
     idx : usize,
+    rom : Intel8080
+
 }
 
 impl IntelDebug {
@@ -15,10 +18,12 @@ impl IntelDebug {
             rom_buf : Vec::<u8>::new(),
             //idx to index the memory
             idx : 0,
+            rom : Intel8080::new(),
         }
     }
     //Read the provided ROM into memory
     pub fn load_rom(&mut self, rom : &str) {
+        self.rom.load_rom(rom);
         let mut rom = File::open(rom).unwrap_or_else(|_err| panic!("Valid ROM needed!"));
         rom.read_to_end(&mut self.rom_buf).unwrap_or_else(|_err| panic!("Error reading ROM"));
     }
