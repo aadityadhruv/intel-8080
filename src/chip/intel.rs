@@ -428,6 +428,24 @@ impl Intel8080 {
         self.c = self.byte2;
     }
 
+    pub fn stax_0x02(&mut self) {
+        let idx = ((self.b as u16) << 8 | self.c as u16) as usize;
+        self.mem[idx] = self.a;
+    }
+    pub fn dcr_0x05(&mut self) {
+        self.b -= 1;
+    }
+    pub fn mv_0x06(&mut self) {
+        self.b = self.byte2;
+    }
+    pub fn dad_0x09(&mut self) {
+        let num1 = (self.h as u16) << 8 | self.l as u16;
+        let num2 = (self.b as u16) << 8 | self.c as u16;
+        let sum = num1 + num2;
+        self.h = (sum >> 8) as u8;
+        self.l = (sum & 0x00FF) as u8;
+    }
+
 
 
 
