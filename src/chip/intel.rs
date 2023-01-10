@@ -10,11 +10,11 @@ use crate::DISPLAY_LENGTH;
 use crate::SCALE;
 
 struct Flags {
-    z : u8,
-    s : u8,
-    p : u8,
-    cy : u8,
-    ac : u8,
+    z : u8, /// set to zero when result is zero
+    s : u8, //sign - set to MSB
+    p : u8, //parity 
+    cy : u8, //carry/borrow
+    ac : u8, //aux carry - bcd
 
 }
 pub struct Intel8080 {
@@ -444,6 +444,19 @@ impl Intel8080 {
         let sum = num1 + num2;
         self.h = (sum >> 8) as u8;
         self.l = (sum & 0x00FF) as u8;
+    }
+
+    pub fn dcr_0x0d(&mut self) {
+        let checked = self.c.checked_sub(1);
+        self.c = self.c.wrapping_sub(1);
+    }
+
+    pub fn mvi_0xe(&mut self) {
+        self.c = self.byte2;
+    }
+
+    pub fn rrc_0x0f(&mut self) {
+        
     }
 
 
