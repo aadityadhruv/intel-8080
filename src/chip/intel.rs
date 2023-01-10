@@ -458,12 +458,173 @@ impl Intel8080 {
     pub fn rrc_0x0f(&mut self) {
         
     }
+    
+    pub fn lxi_0x11(&mut self) {
 
+    }
 
+    pub fn inx_0x13(&mut self) {
 
+    }
 
+    pub fn dad_0x19(&mut self) {
 
+    }
 
+    pub fn ldax_0x1a(&mut self) {
 
+    }
+
+    pub fn lxi_0x21(&mut self) {
+
+    }
+
+    pub fn inx_0x23(&mut self) {
+
+    }
+    
+    pub fn mvi_0x26(&mut self) {
+
+    } 
+
+    pub fn dad_0x29(&mut self) {
+
+    }
+
+    pub fn lxi_0x31(&mut self) {
+
+    }
+
+    pub fn sta_0x32(&mut self) {
+
+    }
+
+    pub fn mvi_0x36(&mut self) {
+
+    }
+
+    pub fn lda_0x3a(&mut self) {
+
+    }
+
+    pub fn mvi_0x3e(&mut self) {
+
+    }
+
+    pub fn mov_0x56(&mut self) {
+
+    }
+
+    pub fn mov_0x5e(&mut self) {
+
+    }
+    
+    pub fn mov_0x66(&mut self) {
+
+    }
+
+    pub fn mov_0x6f(&mut self) {
+
+    }
+
+    pub fn mov_0x77(&mut self) {
+
+    }
+
+    pub fn mov_0x7a(&mut self) {
+
+    }
+
+    pub fn mov_0x7b(&mut self) {
+
+    }
+
+    pub fn mov_0x7c(&mut self) {
+
+    }
+
+    pub fn mov_0x7e(&mut self) {
+
+    }
+    
+    pub fn ana_0xa7(&mut self) {
+
+    }
+
+    pub fn xra_0xaf(&mut self) {
+
+    }
+
+    pub fn pop_0xc1(&mut self) {
+
+    }
+
+    pub fn jnz_0xc2(&mut self) {
+
+    }
+
+    pub fn jmp_0xc3(&mut self) {
+
+    }
+
+    pub fn push_0xc5(&mut self) {
+
+    }
+
+    pub fn adi_0xc6(&mut self) {
+
+    }
+
+    pub fn ret_0xc9(&mut self) {
+
+    }
+
+    pub fn call_0xcd(&mut self) {
+
+    }
+
+    pub fn pop_0xd1(&mut self) {
+
+    }
+
+    pub fn out_0xd3(&mut self) {
+
+    }
+
+    pub fn push_0xd5(&mut self) {
+
+    }
+
+    pub fn pop_0xe1(&mut self) {
+
+    }
+
+    pub fn push_0xe5(&mut self) {
+
+    }
+
+    pub fn ani_0xe6(&mut self) {
+
+    }
+
+    pub fn xchg_0xeb(&mut self) {
+
+    }
+
+    pub fn pop_0xf1(&mut self) {
+
+    }
+
+    pub fn push_0xf5(&mut self) {
+
+    }
+
+    pub fn ei_0xfb(&mut self) {
+
+    }
+
+    pub fn cpi_0xfe(&mut self) {
+
+    }
 
 }
