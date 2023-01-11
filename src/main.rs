@@ -25,11 +25,10 @@ fn main() {
     let debug = match args.debug { Some(v) => { v } None => {0} };
     println!("Debug mode is {}, loading ROM {}", if debug > 0 {"ON"} else {"OFF"}, rom);
 
-
     //SDL initalizationa and window creation
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
-    let window_name = String::from("Intel-8080") + &rom;
+    let window_name = String::from("Intel-8080: ") + &rom;
     let window = video_subsystem.window(
         window_name.as_str(),
         intel_8080::WIDTH * intel_8080::SCALE,
@@ -45,11 +44,12 @@ fn main() {
     //Keyboard input handler
     let mut event_pump = sdl_context.event_pump().unwrap();
 
-
+    //Get a Intel 8080 struct with the rom loaded
+    let mut chip = Intel8080::new();
+    chip.load_rom(&rom);
 
     if debug > 0 {
-        let mut dassm = IntelDebug::new();
-        dassm.load_rom(&rom);
+        let mut dassm = IntelDebug::new(chip);
         if debug == 1 {
             dassm.dump_rom();
         }
@@ -85,8 +85,6 @@ fn main() {
         }
     }
     else {
-        let mut chip = Intel8080::new();
-        chip.load_rom(&rom);
 
         'running: loop {
             //chip.clear_input();

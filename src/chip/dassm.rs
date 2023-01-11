@@ -4,45 +4,33 @@ use super::intel::Intel8080;
 
 //A rudimentary struct for debugging 
 pub struct IntelDebug {
-    rom_buf : Vec::<u8>, 
-    idx : usize,
-    rom : Intel8080
-
+    chip : Intel8080
 }
 
 impl IntelDebug {
     //Create a new struct for debugging
-    pub fn new() -> Self {
+    pub fn new(other_chip : Intel8080) -> Self {
         IntelDebug {
-            //The entire rom as a buffer
-            rom_buf : Vec::<u8>::new(),
-            //idx to index the memory
-            idx : 0,
-            rom : Intel8080::new(),
+            //the entire chip struct 
+            chip : other_chip,
         }
-    }
-    //Read the provided ROM into memory
-    pub fn load_rom(&mut self, rom : &str) {
-        self.rom.load_rom(rom);
-        let mut rom = File::open(rom).unwrap_or_else(|_err| panic!("Valid ROM needed!"));
-        rom.read_to_end(&mut self.rom_buf).unwrap_or_else(|_err| panic!("Error reading ROM"));
     }
 
     pub fn step(&mut self) {
         todo!();
     }
 
-    //DEBUG: Translates the instruction at self.idx into human-readable assembly
+    //DEBUG: Translates the instruction at self.chip.pc into human-readable assembly
     fn translate(&mut self) {
         //The instruction itself
-        let instr = self.rom_buf[self.idx];
+        let instr = self.chip.mem[self.chip.pc as usize];
         //Possible arguments for the current instruction
-        let arg1 = self.rom_buf.get(self.idx + 1);
-        let arg2 = self.rom_buf.get(self.idx + 2);
+        let arg1 = self.chip.mem.get(self.chip.pc as usize + 1);
+        let arg2 = self.chip.mem.get(self.chip.pc as usize + 2);
         let mut next = 1;
 
         //Print the current instruction number and the instruction
-        print!("|{:04x}  |  {:04x}  |  ", self.idx, instr);
+        print!("|{:04x}  |  {:04x}  |  ", self.chip.pc, instr);
         //Match the Instruction to all possible opcodes and print the corresponding instruction
         match instr {
 
@@ -341,20 +329,20 @@ impl IntelDebug {
         }
 
 
-        self.idx += next;
+        self.chip.pc += next;
     }
     //A very basic debugging option to dump the whole rom and translate it
     pub fn dump_rom(&mut self) {
-        //temporarily store the value of idx for later restoration
-        let temp = self.idx;
+        //temporarily store the value of chip.pc for later restoration
+        let temp = self.chip.pc;
         //Loop until we reach the end of the buffer
         println!("Index  | Opcode |  Instruction");
         println!("--------------------------------");
-        while self.idx < self.rom_buf.len() {
+        while self.chip.pc < self.chip.rom_len {
             self.translate();
         }
-        //reset the idx back to 0 incase future operations are needed
-        self.idx = temp;
+        //reset the chip.pc back to 0 incase future operations are needed
+        self.chip.pc = temp;
     }
 }
 
