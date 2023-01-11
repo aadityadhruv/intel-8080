@@ -9,41 +9,42 @@ use crate::WIDTH;
 use crate::DISPLAY_LENGTH;
 use crate::SCALE;
 
-struct Flags {
-    z : u8, /// set to zero when result is zero
-    s : u8, //sign - set to MSB
-    p : u8, //parity 
-    cy : u8, //carry/borrow
-    ac : u8, //aux carry - bcd
+pub struct Flags {
+    pub zero : u8, /// set to zero when result is zero
+    pub sign : u8, //sign - set to MSB
+    pub parity : u8, //parity 
+    pub carry : u8, //carry/borrow
+    pub aux_carry : u8, //aux carry - bcd
 
 }
 pub struct Intel8080 {
     //Registers
-    a : u8,
-    b : u8,
-    c : u8,
-    d : u8,
-    e : u8,
-    h : u8,
-    l : u8,
+    pub a : u8,
+    pub b : u8,
+    pub c : u8,
+    pub d : u8,
+    pub e : u8,
+    pub h : u8,
+    pub l : u8,
     pub instr : u8, //Current instr
-    sp : u16, //stack pointer
-    pc : u16, //program counter
-    mem : [u8; 0x4000], //Memory buffer, which includes video buffer starting at 0x2400
-    byte2 : u8,
-    byte3 : u8,
-    flags : Flags //Flags for math
+    pub sp : u16, //stack pointer
+    pub pc : u16, //program counter
+    pub mem : [u8; 0x4000], //Memory buffer, which includes video buffer starting at 0x2400
+    pub byte2 : u8,
+    pub byte3 : u8,
+    pub rom_len : u16,
+    pub flags : Flags //Flags for math
 }
 
 impl Flags {
     //New Flags struct, used only once
     fn new() -> Self {
         Flags {
-            z : 0,
-            s : 0, 
-            p : 0,
-            cy : 0,
-            ac : 0,
+            zero : 0,
+            sign : 0, 
+            parity : 0,
+            carry : 0,
+            aux_carry : 0,
         }
     }
 }
@@ -64,7 +65,8 @@ impl Intel8080 {
             pc : 0,
             mem : [0; 0x4000],
             byte2 : 0,
-            byte3: 0,
+            byte3 : 0,
+            rom_len : 0,
             flags : Flags::new(),
         }
     }
@@ -77,6 +79,7 @@ impl Intel8080 {
 
         for (i, val) in rom_buf.into_iter().enumerate() {
             self.mem[i] = val;
+            self.rom_len = i as u16;
         }
     }
     //Clear input key
