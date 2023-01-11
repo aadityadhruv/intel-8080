@@ -1,5 +1,5 @@
-use std::fs::File;
-use std::io::Read;
+use std::io;
+use std::io::prelude::*;
 use super::intel::Intel8080;
 
 //A rudimentary struct for debugging 
@@ -16,8 +16,27 @@ impl IntelDebug {
         }
     }
 
+    // Step and manually move instructions
     pub fn step(&mut self) {
-        todo!();
+        self.chip.fetch();
+        self.chip.execute();
+        //next, back, registers, debug print, exec, peek
+        println!("action[n(n),b,r,d,e,p(n),?]:");
+        let mut input = String::new();
+        let input = io::stdin().read_line(&mut input).unwrap();
+    }
+
+    fn handle_input(&mut self, input : &str) {
+        match input.chars().next().unwrap() {
+            'n' => { println!("Next") }
+            'b' => { println!("Back") }
+            'r' => { println!("Registers") }
+            'd' => { println!("Debug print") }
+            'e' => { println!("Exec") }
+            'p' => { println!("Peek") }
+            '?' => { println!("?") }
+            _ => {}
+        }
     }
 
     //DEBUG: Translates the instruction at self.chip.pc into human-readable assembly
