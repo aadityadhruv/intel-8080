@@ -23,7 +23,8 @@ impl IntelDebug {
         //next, back, registers, debug print, exec, peek
         println!("action[n(n),b,r,d,e,p(n),?]:");
         let mut input = String::new();
-        let input = io::stdin().read_line(&mut input).unwrap();
+        let return_code = io::stdin().read_line(&mut input).unwrap();
+        self.handle_input(&input);
     }
 
     fn handle_input(&mut self, input : &str) {

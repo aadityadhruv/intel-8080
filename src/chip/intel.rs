@@ -459,23 +459,36 @@ impl Intel8080 {
     }
 
     pub fn rrc_0x0f(&mut self) {
-        
+        let lsb = self.a & 1;
+        self.a >>= 1;
+        self.a = self.a | lsb << 7;
+        self.flags.carry = lsb;
     }
     
     pub fn lxi_0x11(&mut self) {
-
+        self.d = self.byte3;
+        self.e = self.byte2;
     }
 
     pub fn inx_0x13(&mut self) {
-
+        let inx = ((self.d as u16) << 8 | self.e as u16) + 1; 
+        self.d = (inx >> 8) as u8;
+        self.e = (inx & 0x00FF) as u8;
     }
 
     pub fn dad_0x19(&mut self) {
+        let hl = ((self.h as u16) << 8 | self.l as u16);
+        let de = ((self.d as u16) << 8 | self.e as u16);
 
+        let sum = hl + de;
+
+        self.h = (sum >> 8) as u8;
+        self.l = (sum & 0x00ff) as u8;
     }
 
     pub fn ldax_0x1a(&mut self) {
-
+        let de = ((self.d as u16) << 8 | self.l as u16) as usize;
+        self.a = self.mem[de];
     }
 
     pub fn lxi_0x21(&mut self) {
