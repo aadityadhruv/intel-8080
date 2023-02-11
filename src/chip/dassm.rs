@@ -3,13 +3,13 @@ use std::io::prelude::*;
 use super::intel::Intel8080;
 
 //A rudimentary struct for debugging 
-pub struct IntelDebug {
-    chip : Intel8080
+pub struct IntelDebug<'a> {
+    chip : &'a mut Intel8080
 }
 
-impl IntelDebug {
+impl<'a> IntelDebug<'a> {
     //Create a new struct for debugging
-    pub fn new(other_chip : Intel8080) -> Self {
+    pub fn new(other_chip : &'a mut Intel8080) -> Self {
         IntelDebug {
             //the entire chip struct 
             chip : other_chip,

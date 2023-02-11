@@ -25,6 +25,18 @@ fn main() {
     let debug = match args.debug { Some(v) => { v } None => {0} };
     println!("Debug mode is {}, loading ROM {}", if debug > 0 {"ON"} else {"OFF"}, rom);
 
+
+    //Get a Intel 8080 struct with the rom loaded
+    let mut chip = Intel8080::new();
+    chip.load_rom(&rom);
+    let mut dassm = IntelDebug::new(&mut chip);
+
+    if debug == 1 {
+        dassm.dump_rom();
+        return;
+    }
+
+
     //SDL initalizationa and window creation
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
@@ -44,46 +56,37 @@ fn main() {
     //Keyboard input handler
     let mut event_pump = sdl_context.event_pump().unwrap();
 
-    //Get a Intel 8080 struct with the rom loaded
-    let mut chip = Intel8080::new();
-    chip.load_rom(&rom);
-
     if debug > 0 {
-        let mut dassm = IntelDebug::new(chip);
-        if debug == 1 {
-            dassm.dump_rom();
-        }
-        else {
-            'running: loop {
-                //chip.clear_input();
-                for event in event_pump.poll_iter() {
-                    match event {
-                        Event::Quit {..} |
-                            Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
-                                break 'running
-                            },
-                            Event::KeyDown { keycode : Some(key), .. } => {
-                                //chip.feed_input(key);
-                            }
-                        _ => {}
-                    }
+        'running: loop {
+            //chip.clear_input();
+            for event in event_pump.poll_iter() {
+                match event {
+                    Event::Quit {..} |
+                        Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                            break 'running
+                        },
+                        Event::KeyDown { keycode : Some(key), .. } => {
+                            //chip.feed_input(key);
+                        }
+                    _ => {}
                 }
-                // The rest of the game loop goes here...
-                //Draw black bg
-                canvas.set_draw_color(Color::RGB(0, 0, 0));
-                //clear the screen with black bg
-                canvas.clear();
-                //choose white color 
-                canvas.set_draw_color(Color::RGB(255, 255, 255));
-                //render all the rectangles as white pixels on the canvas
-                //display canvas
-                dassm.step();
-                canvas.present();
-
-                std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
-
             }
+            // The rest of the game loop goes here...
+            //Draw black bg
+            canvas.set_draw_color(Color::RGB(0, 0, 0));
+            //clear the screen with black bg
+            canvas.clear();
+            //choose white color 
+            canvas.set_draw_color(Color::RGB(255, 255, 255));
+            //render all the rectangles as white pixels on the canvas
+            //display canvas
+            dassm.step();
+            canvas.present();
+
+            std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
+
         }
+    
     }
     else {
 
