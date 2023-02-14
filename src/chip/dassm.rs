@@ -18,26 +18,37 @@ impl<'a> IntelDebug<'a> {
 
     // Step and manually move instructions
     pub fn step(&mut self) {
-        self.chip.fetch();
-        self.chip.execute();
-        //next, back, registers, debug print, exec, peek
-        println!("action[n(n),b,r,d,e,p(n),?]:");
+//        self.chip.fetch();
+//        self.chip.execute();
+        //next, back, registers, exec, peek
+        println!("action[n(n),b,r,e,p(n),?]:");
         let mut input = String::new();
-        let return_code = io::stdin().read_line(&mut input).unwrap();
+        let _return_code = io::stdin().read_line(&mut input).unwrap();
         self.handle_input(&input);
     }
 
     fn handle_input(&mut self, input : &str) {
         match input.chars().next().unwrap() {
-            'n' => { println!("Next") }
+            'n' => { self.fetch() }
             'b' => { println!("Back") }
-            'r' => { println!("Registers") }
-            'd' => { println!("Debug print") }
-            'e' => { println!("Exec") }
+            'r' => { self.dump_registers() }
+            'e' => { self.chip.execute() }
             'p' => { println!("Peek") }
             '?' => { println!("?") }
             _ => {}
         }
+    }
+
+    fn fetch(&mut self) {
+        println!("Fetching next Instruction");
+    }
+
+    fn dump_registers(&mut self) {
+        println!("Dumping registers");
+    }
+
+    fn execute(&mut self) {
+        println!("Executing instruction");
     }
 
     //DEBUG: Translates the instruction at self.chip.pc into human-readable assembly
